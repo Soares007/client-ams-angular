@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { ClientService } from './../client.service';
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../client';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-clients',
@@ -12,7 +13,16 @@ export class ClientsComponent implements OnInit{
 
   clients: Client [] = [];
 
-  constructor (private ClientService: ClientService){}
+  formGroupClient : FormGroup;
+
+  constructor (private ClientService: ClientService,
+     private formBuilder: FormBuilder
+
+    ){
+       this.formGroupClient = formBuilder.group({
+
+       });
+    }
   ngOnInit(): void {
     this.loadClients();
   }
