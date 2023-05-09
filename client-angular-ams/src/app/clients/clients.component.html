@@ -1,29 +1,32 @@
 <div class="row">
   <div class="col-8 m-auto">
-    <div class="mb-3">
-      <div class="display-6 text-center">
-        Cadastro de Clientes
+    <form [formGroup]="formGroupClient">
+      <div class="mb-3">
+        <div class="display-6 text-center">
+          Cadastro de Clientes
+        </div>
       </div>
-    </div>
-    <div class="mb-3">
-      <label for="name" class="form-label">Nome:</label>
-      <input type="text" class="form-control" id="name" placeholder="Seu nome">
-    </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" placeholder="Seu email">
-    </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome:</label>
+        <input type="text" formControlName="name" class="form-control" id="name" placeholder="Seu nome">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input type="email" formControlName="email" class="form-control" id="email" placeholder="Seu email">
+      </div>
+      <div class="mb-3 d-flex justify-content-end">
+        <button class="btn btn-success" (click)="save()">Salvar</button>
+      </div>
+    </form>
   </div>
 </div>
-
-
-
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">Email</th>
+      <th scope="col">Opções</th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +34,10 @@
       <th scope="row">{{client.id}}</th>
       <td>{{client.name}}</td>
       <td>{{client.email}}</td>
+      <td>
+        <button class="btn btn-primary me-2" (click)="edit(client)">Editar</button>
+        <button class="btn btn-danger" (click)="delete(client)">Excluir</button>
+      </td>
     </tr>
   </tbody>
 </table>
