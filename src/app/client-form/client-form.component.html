@@ -9,35 +9,21 @@
       <div class="mb-3">
         <label for="name" class="form-label">Nome:</label>
         <input type="text" formControlName="name" class="form-control" id="name" placeholder="Seu nome">
+        <div *ngIf="submitted && name.invalid">
+          <small class="text-danger">Nome inválido!</small>
+        </div>
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email:</label>
         <input type="email" formControlName="email" class="form-control" id="email" placeholder="Seu email">
+        <div *ngIf="submitted && email.invalid">
+          <small class="text-danger">Email inválido!</small>
+        </div>
       </div>
-      <div class="mb-3 d-flex justify-content-end">
+      <span class="mb-3 d-flex justify-content-end align-items-start gap-2">
         <button class="btn btn-success" (click)="save()">Salvar</button>
-      </div>
+        <button class="btn btn-danger"(click)="limparDados()">Limpar</button>
+      </span>
     </form>
   </div>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nome</th>
-      <th scope="col">Email</th>
-      <th scope="col">Opções</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let client of clients">
-      <th scope="row">{{client.id}}</th>
-      <td>{{client.name}}</td>
-      <td>{{client.email}}</td>
-      <td>
-        <button class="btn btn-primary me-2" (click)="edit(client)">Editar</button>
-        <button class="btn btn-danger" (click)="delete(client)">Excluir</button>
-      </td>
-    </tr>
-  </tbody>
-</table>

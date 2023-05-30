@@ -13,19 +13,11 @@ export class ClientsComponent implements OnInit {
 
 
   clients: Client[] = [];
+  client: Client = {} as Client;
   isEditing: boolean = false;
-  formGroupClient: FormGroup;
-
-  constructor(private ClientService: ClientService,
-    private formBuilder: FormBuilder
-
-  ) {
-    this.formGroupClient = formBuilder.group({
-      id: [''],
-      name: [''],
-      email: ['']
-    });
+  constructor(private ClientService: ClientService){
   }
+
   ngOnInit(): void {
     this.loadClients();
   }
@@ -36,34 +28,35 @@ export class ClientsComponent implements OnInit {
     });
   }
 
-  save() {
-    if (this.isEditing) {
-      this.ClientService.update(this.formGroupClient.value).subscribe(
-        {
-          next: () => {
-            this.loadClients();
-            this.formGroupClient.reset();
-            this.isEditing = false;
-          }
+  onCleanEvent(){
+    this.isEditing = false;
+  }
 
-        }
-      );
-    }
-    else {
-      this.ClientService.save(this.formGroupClient.value).subscribe(
-        {
-          next: data => {
-            this.clients.push(data)
-            this.formGroupClient.reset();
+  onSaveEvent(client: Client) {
+      if (this.isEditing) {
+        this.ClientService.update(client).subscribe(
+          {
+            next: () => {
+              this.loadClients();
+              this.isEditing = false;
+            }
 
           }
-        }
-      );
-    }
+        );
+      }
+      else {
+        this.ClientService.save(client).subscribe(
+          {
+            next: data => {
+              this.clients.push(data)
+            }
+          }
+        );
+      }
   }
 
   edit(client: Client) {
-    this.formGroupClient.setValue(client);
+    this.client = client;
     this.isEditing = true;
   }
 
