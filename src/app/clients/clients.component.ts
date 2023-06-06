@@ -3,6 +3,7 @@ import { ClientService } from './../client.service';
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../client';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clients',
@@ -13,9 +14,8 @@ export class ClientsComponent implements OnInit {
 
 
   clients: Client[] = [];
-  client: Client = {} as Client;
-  isEditing: boolean = false;
-  constructor(private ClientService: ClientService){
+  constructor(private ClientService: ClientService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -27,37 +27,12 @@ export class ClientsComponent implements OnInit {
       next: data => this.clients = data
     });
   }
-
-  onCleanEvent(){
-    this.isEditing = false;
-  }
-
-  onSaveEvent(client: Client) {
-      if (this.isEditing) {
-        this.ClientService.update(client).subscribe(
-          {
-            next: () => {
-              this.loadClients();
-              this.isEditing = false;
-            }
-
-          }
-        );
-      }
-      else {
-        this.ClientService.save(client).subscribe(
-          {
-            next: data => {
-              this.clients.push(data)
-            }
-          }
-        );
-      }
+  create() {
+    this.router.navigate(['createClient']);
   }
 
   edit(client: Client) {
-    this.client = client;
-    this.isEditing = true;
+    this.router.navigate(['clientDetails', client.id]);
   }
 
   delete(client: Client) {
